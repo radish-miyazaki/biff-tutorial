@@ -18,19 +18,6 @@
       {:status 303
        :headers {"location" "/signin?error=not-signed-in"}})))
 
-;; Stick this function somewhere in your middleware stack below if you want to
-;; inspect what things look like before/after certain middleware fns run.
-(defn wrap-debug [handler]
-  (fn [ctx]
-    (let [response (handler ctx)]
-      (println "REQUEST")
-      (biff/pprint ctx)
-      (def ctx* ctx)
-      (println "RESPONSE")
-      (biff/pprint response)
-      (def response* response)
-      response)))
-
 (defn wrap-site-defaults [handler]
   (-> handler
       biff/wrap-render-rum

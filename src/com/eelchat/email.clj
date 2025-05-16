@@ -4,7 +4,7 @@
             [clojure.tools.logging :as log]
             [rum.core :as rum]))
 
-(defn signin-link [{:keys [to url user-exists]}]
+(defn signin-link [{:keys [to url]}]
   {:to [{:email to}]
    :subject "Join the eelchat waitlist"
    :html (rum/render-static-markup
@@ -66,7 +66,7 @@
       (log/error (:body result)))
     success))
 
-(defn send-console [ctx form-params]
+(defn send-console [_ form-params]
   (println "TO:" (:to form-params))
   (println "SUBJECT:" (:subject form-params))
   (println)

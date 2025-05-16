@@ -56,7 +56,7 @@
     [:.flex-grow]
     [:.flex-grow]]))
 
-(defn on-error [{:keys [status ex] :as ctx}]
+(defn on-error [{:keys [status _] :as ctx}]
   {:status status
    :headers {"content-type" "text/html"}
    :body (rum/render-static-markup

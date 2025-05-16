@@ -5,7 +5,7 @@
    [com.eelchat.ui :as ui]
    [com.eelchat.middleware :as mid]))
 
-(defn app [{:keys [session biff/db] :as ctx}]
+(defn app [{:keys [session biff/db] :as _}]
   (let [{:user/keys [email]} (xt/entity db (:uid session))]
     (ui/page
      {}

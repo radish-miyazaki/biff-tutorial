@@ -29,9 +29,9 @@
 
 (defn add-fixtures []
   (biff/submit-tx (get-context)
-    (-> (io/resource "fixtures.edn")
-        slurp
-        edn/read-string)))
+                  (-> (io/resource "fixtures.edn")
+                      slurp
+                      edn/read-string)))
 
 (defn check-config []
   (let [prod-config (biff/use-aero-config {:biff.config/profile "prod"})
@@ -43,7 +43,7 @@
                      :recaptcha/secret-key
                      ; ...
                      ]
-        get-secrets (fn [{:keys [biff/secret] :as config}]
+        get-secrets (fn [{:keys [biff/secret]}]
                       (into {}
                             (map (fn [k]
                                    [k (secret k)]))
@@ -65,7 +65,7 @@
   (add-fixtures)
 
   ;; Query the database
-  (let [{:keys [biff/db] :as ctx} (get-context)]
+  (let [{:keys [biff/db]} (get-context)]
     (q db
        '{:find (pull user [*])
          :where [[user :user/email]]}))
@@ -74,10 +74,10 @@
   (let [{:keys [biff/db] :as ctx} (get-context)
         user-id (biff/lookup-id db :user/email "hello@example.com")]
     (biff/submit-tx ctx
-      [{:db/doc-type :user
-        :xt/id user-id
-        :db/op :update
-        :user/email "new.address@example.com"}]))
+                    [{:db/doc-type :user
+                      :xt/id user-id
+                      :db/op :update
+                      :user/email "new.address@example.com"}]))
 
   (sort (keys (get-context)))
 
