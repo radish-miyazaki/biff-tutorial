@@ -22,7 +22,7 @@
        (merge #:base{:title settings/app-name
                      :lang "en-US"
                      :icon "/img/glider.png"
-                     :description (str settings/app-name " Description")
+                     :description "The world's finest discussion platform"
                      :image "https://clojure.org/images/clojure-logo-120b.png"})
        (update :base/head (fn [head]
                             (concat [[:link {:rel "stylesheet" :href (static-path "/css/main.css")}]
@@ -30,6 +30,13 @@
                                      [:script {:src "https://unpkg.com/htmx.org@2.0.4"}]
                                      [:script {:src "https://unpkg.com/htmx-ext-ws@2.0.1/ws.js"}]
                                      [:script {:src "https://unpkg.com/hyperscript.org@0.9.13"}]
+                                     [:link {:href "/apple-touch-icon.png" :size "180x180" :rel "apple-touch-icon"}]
+                                     [:link {:href "/favicon-32x32.png" :size "32x32" :rel "icon"}]
+                                     [:link {:href "/favicon-16x16.png" :size "16x16" :rel "icon"}]
+                                     [:link {:href "/site.webmanifest" :rel "manifest"}]
+                                     [:link {:color "#5bbad5" :href "/safari-pinned-tab.svg" :rel "mask-icon"}]
+                                     [:meta {:content "#da532c" :name "msapplication-TileColor"}]
+                                     [:meta {:content "#0d9488" :name "theme-color"}]
                                      (when recaptcha
                                        [:script {:src "https://www.google.com/recaptcha/api.js"
                                                  :async "async" :defer "defer"}])]
@@ -39,14 +46,15 @@
 (defn page [ctx & body]
   (base
    ctx
-   [:.flex-grow]
-   [:.p-3.mx-auto.max-w-screen-sm.w-full
-    (when (bound? #'csrf/*anti-forgery-token*)
-      {:hx-headers (cheshire/generate-string
-                    {:x-csrf-token csrf/*anti-forgery-token*})})
-    body]
-   [:.flex-grow]
-   [:.flex-grow]))
+   [:.bg-orange-50.flex.flex-col.flex-grow
+    [:.flex-grow]
+    [:.p-3.mx-auto.max-w-screen-sm.w-full
+     (when (bound? #'csrf/*anti-forgery-token*)
+       {:hx-headers (cheshire/generate-string
+                     {:x-csrf-token csrf/*anti-forgery-token*})})
+     body]
+    [:.flex-grow]
+    [:.flex-grow]]))
 
 (defn on-error [{:keys [status ex] :as ctx}]
   {:status status

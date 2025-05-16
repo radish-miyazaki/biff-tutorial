@@ -16,7 +16,8 @@
        [:button.text-blue-500.hover:text-blue-800 {:type "submit"} "Sign out"])
       "."]
      [:div.h-6]
-     [:div "Nothing here yet."])))
+     [:div "Thanks for joining the waitlist. "
+      "We'll let you know when eelchat is ready to use."])))
 
 (def module
   {:routes ["/app" {:middleware [mid/wrap-signed-in]}
