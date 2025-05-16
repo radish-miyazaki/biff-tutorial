@@ -10,7 +10,6 @@
    [com.eelchat.middleware :as mid]
    [com.eelchat.schema :as schema]
    [com.eelchat.ui :as ui]
-   [com.eelchat.worker :as worker]
    [malli.core :as malc]
    [malli.registry :as malr]
    [nrepl.cmdline :as nrepl-cmd])
@@ -20,15 +19,12 @@
   [app/module
    (biff/authentication-module {})
    home/module
-   schema/module
-   worker/module])
+   schema/module])
 
 (def routes [["" {:middleware [mid/wrap-site-defaults]}
               (keep :routes modules)]
              ["" {:middleware [mid/wrap-api-defaults]}
               (keep :api-routes modules)]])
-
-
 
 (def handler (-> (biff/reitit-handler {:routes routes})
                  mid/wrap-base-defaults))
